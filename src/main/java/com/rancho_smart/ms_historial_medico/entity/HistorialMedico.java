@@ -8,13 +8,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
-@Entity(name = "HISTORIAL_MEDICO")
+@Entity
+@Table(name = "HISTORIAL_MEDICO")
 public class HistorialMedico {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idHistorialMedico;
 
     @Column(name = "DESCRIPCION")
     private String descripcion;
@@ -41,12 +43,12 @@ public class HistorialMedico {
         this.enfermedadesCronicas = enfermedadesCronicas;
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdHistorialMedico() {
+        return idHistorialMedico;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdHistorialMedico(Long idHistorialMedico) {
+        this.idHistorialMedico = idHistorialMedico;
     }
 
     public String getDescripcion() {

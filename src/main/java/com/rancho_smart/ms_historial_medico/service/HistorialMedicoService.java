@@ -19,20 +19,12 @@ public class HistorialMedicoService {
         return this.historialMedicoRepository.findAll();
     }
 
-    public List<HistorialMedico>getHistorialesMedicosByAnimal(Long idAnimal){
-        return this.historialMedicoRepository.findByIdAnimal(idAnimal);
-    }
-
-    public List<Long> getHistorialIdsPorIdAnimal(Long idAnimal) {
-        return historialMedicoRepository.findIdByIdAnimal(idAnimal);
-    }
-    
     public Optional<HistorialMedico> getHistorialMedico(Long id){
         return this.historialMedicoRepository.findById(id);
     }
 
     public HistorialMedico saveHistorialMedico(HistorialMedico historialMedico){
-        return this.saveHistorialMedico(historialMedico);
+        return this.historialMedicoRepository.save(historialMedico);
     }
 
     public void deleteHistorialMedico(Long id){

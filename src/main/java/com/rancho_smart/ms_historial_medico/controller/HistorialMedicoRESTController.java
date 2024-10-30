@@ -31,18 +31,6 @@ public class HistorialMedicoRESTController {
         List<HistorialMedico> listado = this.historialMedicoService.getHistorialesMedicos();
         return new ResponseEntity<>(listado, HttpStatus.OK);
     }
-
-    @GetMapping("/animal/{idAnimal}")
-    public ResponseEntity<List<HistorialMedico>> getHistorialesMedicosByIdAnimal(@PathVariable Long idAnimal) {
-        List<HistorialMedico> listadoHistoriales = this.historialMedicoService.getHistorialesMedicosByAnimal(idAnimal);
-        return new ResponseEntity<>(listadoHistoriales, HttpStatus.OK);
-    }
-    
-    @GetMapping("/id-historial-medico/{idAnimal}")
-    public ResponseEntity<List<Long>> getIdHistorialMedico(@PathVariable Long IdAnimal){
-        List<Long> idHistorialMedico = this.historialMedicoService.getHistorialIdsPorIdAnimal(IdAnimal);
-        return new ResponseEntity<>(idHistorialMedico, HttpStatus.OK);
-    }
     
     @GetMapping("/{id}")
     public ResponseEntity<HistorialMedico> getHistorialMedico(@PathVariable Long id){
@@ -62,7 +50,7 @@ public class HistorialMedicoRESTController {
         if(!this.historialMedicoService.getHistorialMedico(id).isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            historialMedico.setId(id);
+            historialMedico.setIdHistorialMedico(id);
             HistorialMedico historialMedicoActualizado = this.historialMedicoService.saveHistorialMedico(historialMedico);
             return new ResponseEntity<>(historialMedicoActualizado, HttpStatus.OK);
         }
