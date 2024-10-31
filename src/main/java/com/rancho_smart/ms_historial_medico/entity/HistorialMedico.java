@@ -5,6 +5,7 @@ import java.util.List;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,7 +31,7 @@ public class HistorialMedico {
     @Column(name = "ENFERMEDADES_CRONICAS")
     private boolean enfermedadesCronicas;
     
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> observaciones;
 
     public HistorialMedico() {
@@ -81,5 +82,13 @@ public class HistorialMedico {
 
     public void setEnfermedadesCronicas(boolean enfermedadesCronicas) {
         this.enfermedadesCronicas = enfermedadesCronicas;
+    }
+
+    public List<String> getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(List<String> observaciones) {
+        this.observaciones = observaciones;
     }
 }

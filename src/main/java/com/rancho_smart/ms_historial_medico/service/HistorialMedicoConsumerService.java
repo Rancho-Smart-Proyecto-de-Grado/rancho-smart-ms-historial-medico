@@ -1,5 +1,8 @@
 package com.rancho_smart.ms_historial_medico.service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -26,6 +29,11 @@ public class HistorialMedicoConsumerService {
             
             HistorialMedico historialMedico = new HistorialMedico();
             historialMedico.setIdAnimal(animalDTO.getIdAnimal());
+            historialMedico.setDescripcion("Este es el historial médico de " + animalDTO.getNombre() + ".\nFecha de Creación: " + LocalDateTime.now());
+            if(historialMedico.getObservaciones() == null){
+                historialMedico.setObservaciones(new ArrayList<>());
+            }
+            historialMedico.getObservaciones().add("Este Historial Médico se creó de manera automática.");
             this.historialMedicoService.saveHistorialMedico(historialMedico);
             System.out.println("Historial Médico creado para el animal ID: " + animalDTO.getIdAnimal());
         } catch (Exception e) {
