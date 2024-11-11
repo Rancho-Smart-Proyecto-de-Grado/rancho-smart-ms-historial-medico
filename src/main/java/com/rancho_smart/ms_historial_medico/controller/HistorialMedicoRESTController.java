@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping("/historiales-medicos")
 public class HistorialMedicoRESTController {
-    
+
     @Autowired
     private HistorialMedicoService historialMedicoService;
 
@@ -31,34 +31,45 @@ public class HistorialMedicoRESTController {
         List<HistorialMedico> listado = this.historialMedicoService.getHistorialesMedicos();
         return new ResponseEntity<>(listado, HttpStatus.OK);
     }
-    
+
     @GetMapping("/{id}")
-    public ResponseEntity<HistorialMedico> getHistorialMedico(@PathVariable Long id){
+    public ResponseEntity<HistorialMedico> getHistorialMedico(@PathVariable Long id) {
         Optional<HistorialMedico> historialMedico = this.historialMedicoService.getHistorialMedico(id);
         return historialMedico.map(ResponseEntity::ok)
-                                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/animal/{idAnimal}")
+    public ResponseEntity<HistorialMedico> getHistorialMedicoByIdAnimal(@PathVariable Long idAnimal) {
+        HistorialMedico historiales = this.historialMedicoService.getHistorialesMedicosByIdAnimal(idAnimal);
+        if (historiales != null) {
+            return ResponseEntity.ok(historiales);
+        }
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping
-    public ResponseEntity<HistorialMedico> saveHistorialMedico(@RequestBody HistorialMedico historialMedico){
+    public ResponseEntity<HistorialMedico> saveHistorialMedico(@RequestBody HistorialMedico historialMedico) {
         HistorialMedico historialMedicoCreado = this.historialMedicoService.saveHistorialMedico(historialMedico);
         return new ResponseEntity<>(historialMedicoCreado, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<HistorialMedico> updateHistorialMedico(@PathVariable Long id, @RequestBody HistorialMedico historialMedico){
-        if(!this.historialMedicoService.getHistorialMedico(id).isPresent()){
+    public ResponseEntity<HistorialMedico> updateHistorialMedico(@PathVariable Long id,
+            @RequestBody HistorialMedico historialMedico) {
+        if (!this.historialMedicoService.getHistorialMedico(id).isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             historialMedico.setIdHistorialMedico(id);
-            HistorialMedico historialMedicoActualizado = this.historialMedicoService.saveHistorialMedico(historialMedico);
+            HistorialMedico historialMedicoActualizado = this.historialMedicoService
+                    .saveHistorialMedico(historialMedico);
             return new ResponseEntity<>(historialMedicoActualizado, HttpStatus.OK);
         }
     }
-    
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<HistorialMedico> deleteHistorialMedico(@PathVariable Long id){
-        if(!this.historialMedicoService.getHistorialMedico(id).isPresent()){
+    public ResponseEntity<HistorialMedico> deleteHistorialMedico(@PathVariable Long id) {
+        if (!this.historialMedicoService.getHistorialMedico(id).isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             this.historialMedicoService.deleteHistorialMedico(id);

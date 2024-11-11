@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import com.rancho_smart.ms_historial_medico.entity.HistorialMedico;
 
+
 @Repository
 public interface HistorialMedicoRepository extends JpaRepository<HistorialMedico, Long>{
+    public HistorialMedico findByIdAnimal(Long idAnimal);
 }

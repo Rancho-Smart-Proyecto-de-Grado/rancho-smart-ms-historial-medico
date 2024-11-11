@@ -19,6 +19,10 @@ public class HistorialMedicoService {
         return this.historialMedicoRepository.findAll();
     }
 
+    public HistorialMedico getHistorialesMedicosByIdAnimal(Long idAnimal){
+        return this.historialMedicoRepository.findByIdAnimal(idAnimal);
+    }  
+
     public Optional<HistorialMedico> getHistorialMedico(Long id){
         return this.historialMedicoRepository.findById(id);
     }
